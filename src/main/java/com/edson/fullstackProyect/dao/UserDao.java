@@ -12,4 +12,6 @@ public interface UserDao {
     void register(User user);
 
     User getUserByCredentials(User user);
+
+    User getUserById(Long id);
 }

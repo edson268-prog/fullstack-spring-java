@@ -22,6 +22,9 @@ public class User {
     @Getter @Setter @Column(name = "email")
     private String email;
 
+    @Getter @Setter @Column(name = "type")
+    private String type;
+
     @Getter @Setter @Column(name = "phone")
     private String phone;
 
