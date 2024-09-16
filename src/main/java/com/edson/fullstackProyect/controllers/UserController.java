@@ -18,15 +18,11 @@ public class UserController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @RequestMapping(value = "api/user/{id}")
-    public User getUser(@PathVariable Long id){
-        User user = new User();
-        user.setId(id);
-        user.setName("Edson");
-        user.setLastName("Ibanez");
-        user.setEmail("edson26web@gmail.com");
-        user.setPhone("67099259");
-        return user;
+    @RequestMapping(value = "api/user/{id}", method = RequestMethod.GET)
+    public User getUser(@RequestHeader(value = "Authorization") String token,
+                        @PathVariable Long id){
+//        if (!validateToken(token)) { return null; }
+        return userDao.getUserById(id);
     }
 
     @RequestMapping(value = "api/users")

@@ -53,4 +53,16 @@ public class UserDaoImp implements UserDao {
         }
         return null;
     }
+
+    @Override
+    public User getUserById(Long id) {
+        String query = "FROM User WHERE id = :id";
+        List<User> list = entityManager.createQuery(query)
+                .setParameter("id", id)
+                .getResultList();
+        if(list.isEmpty()) {
+            return null;
+        }
+        return list.getFirst();
+    }
 }

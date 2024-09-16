@@ -20,12 +20,12 @@ public class AuthController {
     private JWTUtil jwtUtil;
 
     @RequestMapping(value = "api/login", method = RequestMethod.POST)
-    public String login(@RequestBody User user) {
+    public String[] login(@RequestBody User user) {
         User userLogged = userDao.getUserByCredentials(user);
-
         if (userLogged != null) {
-            return jwtUtil.create(String.valueOf(userLogged.getId()), userLogged.getEmail());
+            String token = jwtUtil.create(String.valueOf(userLogged.getId()), userLogged.getEmail());
+            return new String[] { token, String.valueOf(userLogged.getType()) };
         }
-        return "FAIL";
+        return new String[] { "FAIL", "0" };
     }
 }
