@@ -65,4 +65,9 @@ public class UserDaoImp implements UserDao {
         }
         return list.getFirst();
     }
+
+    @Override
+    public void update(User user) {
+        entityManager.merge(user);
+    }
 }
