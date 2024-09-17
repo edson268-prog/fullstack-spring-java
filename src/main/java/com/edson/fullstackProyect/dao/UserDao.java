@@ -14,4 +14,6 @@ public interface UserDao {
     User getUserByCredentials(User user);
 
     User getUserById(Long id);
+
+    void update(User existingUser);
 }

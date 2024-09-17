@@ -2,7 +2,7 @@
 $(document).ready(function() {
     loadUsers();
     $('#users').DataTable();
-    updateUser();
+    updateUserInterface();
 });
 
 async function loadUsers() {
@@ -63,7 +63,7 @@ async function deleteUser(id) {
     location.reload();
 }
 
-function updateUser() {
+function updateUserInterface() {
     document.getElementById("txt-email-user").outerHTML = localStorage.email;
     let userType = localStorage.getItem('type');
         let iconSrc = '';

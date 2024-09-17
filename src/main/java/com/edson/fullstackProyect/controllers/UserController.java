@@ -31,11 +31,6 @@ public class UserController {
         return userDao.getUsers();
     }
 
-    private boolean validateToken(String token) {
-        String userId = jwtUtil.getKey(token);
-        return userId != null;
-    }
-
     @RequestMapping(value = "api/users", method = RequestMethod.POST)
     public void registerUser(@RequestBody User user){
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
@@ -44,14 +39,15 @@ public class UserController {
         userDao.register(user);
     }
 
-    @RequestMapping(value = "user444354")
-    public User editUser(){
-        User user = new User();
-        user.setName("Edson");
-        user.setLastName("Ibanez");
-        user.setEmail("edson26web@gmail.com");
-        user.setPhone("78569995");
-        return user;
+    @RequestMapping(value = "api/users/{id}", method = RequestMethod.PUT)
+    public void editUser(@PathVariable Long id, @RequestBody User user) {
+        User selectedUser = userDao.getUserById(id);
+
+        if (selectedUser != null) {
+            selectedUser.setEmail(user.getEmail());
+            selectedUser.setPhone(user.getPhone());
+            userDao.update(selectedUser);
+        }
     }
 
     @RequestMapping(value = "api/users/{id}", method = RequestMethod.DELETE)
@@ -59,5 +55,10 @@ public class UserController {
                            @PathVariable Long id) {
         if (validateToken(token)) { return; }
         userDao.delete(id);
+    }
+
+    private boolean validateToken(String token) {
+        String userId = jwtUtil.getKey(token);
+        return userId != null;
     }
 }
